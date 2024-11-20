@@ -1,10 +1,8 @@
-# [insert project title]
+# EventLink
 
 ## Description
 
-Name: EventLink
-
-Description: EventLink is a user-friendly platform that helps individuals manage and track their events. Users can create, attend, and manage events, while also interacting with other attendees through approval or rejection of participation requests. With a simple interface, EventLink ensures that users stay organized and connected with upcoming events.
+EventLink is a user-friendly platform that helps individuals manage and track their events. Users can create, attend, and manage events, while also interacting with other attendees through approval or rejection of participation requests. With a simple interface, EventLink ensures that users stay organized and connected with upcoming events.
 
 ## Features
 
@@ -49,4 +47,4 @@ Description: EventLink is a user-friendly platform that helps individuals manage
 
 ## Diagram
 
--![Diagram](images/entityRelationship.png)
+- ![Diagram](images/entityRelationship.png)

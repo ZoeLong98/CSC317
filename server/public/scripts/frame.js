@@ -1,16 +1,26 @@
 function createNav() {
+  const currentPath = window.location.pathname;
+
   return `
     <div class="logo" role="img" aria-label="Company Logo">E</div>
     <nav class="nav-container">
-    <div class="nav-links">
-        <a href="/" class="nav-link nav-active">Home</a>
-        <a href="/events" class="nav-link">Events</a>
-        <a href="#" class="nav-link">My Event</a>
-        <a href="#" class="nav-link">Notification</a>
-    </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link ${
+          currentPath === "/" ? "nav-active" : ""
+        }">Home</a>
+        <a href="/events" class="nav-link ${
+          currentPath === "/events" ? "nav-active" : ""
+        }">Events</a>
+        <a href="/myEvent" class="nav-link ${
+          currentPath === "/myEvent" ? "nav-active" : ""
+        }">My Event</a>
+        <a href="/notification" class="nav-link ${
+          currentPath === "/notification" ? "nav-active" : ""
+        }">Notification</a>
+      </div>
     </nav>
     <hr class="divider" />
-      `;
+  `;
 }
 
 function createFooter() {

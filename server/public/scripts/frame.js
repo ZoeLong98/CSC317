@@ -11,8 +11,8 @@ function createNav() {
         <a href="/events" class="nav-link ${
           currentPath === "/events" ? "nav-active" : ""
         }">Events</a>
-        <a href="/myEvent" class="nav-link ${
-          currentPath === "/myEvent" ? "nav-active" : ""
+        <a href="/myevent" class="nav-link ${
+          currentPath === "/myevent" ? "nav-active" : ""
         }">My Event</a>
         <a href="/notification" class="nav-link ${
           currentPath === "/notification" ? "nav-active" : ""

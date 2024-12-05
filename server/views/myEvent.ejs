@@ -18,10 +18,12 @@
               <p><%= UpcomingEvent[i].description %></p>
               <div class="event-details">
                 <span class="event-time"
-                  >Time: <%= UpcomingEvent[i].date %></span
+                  >Time: <%= new
+                  Date(myEvent[i].event_date).toLocaleString('en-US', {
+                  timeZone: 'America/Los_Angeles' }) %></span
                 >
                 <span class="event-planner"
-                  >Planner: <%= UpcomingEvent[i].planner %></span
+                  >Planner: <%= UpcomingEvent[i].created_by %></span
                 >
               </div>
             </div>
@@ -37,9 +39,13 @@
               <h3><%= myEvent[i].title %></h3>
               <p><%= myEvent[i].description %></p>
               <div class="event-details">
-                <span class="event-time">Time: <%= myEvent[i].date %></span>
+                <span class="event-time"
+                  >Time: <%= new
+                  Date(myEvent[i].event_date).toLocaleString('en-US', {
+                  timeZone: 'America/Los_Angeles' }) %></span
+                >
                 <span class="event-planner"
-                  >Planner: <%= myEvent[i].planner %></span
+                  >Planner: <%= myEvent[i].created_by %></span
                 >
               </div>
             </div>

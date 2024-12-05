@@ -1,41 +1,14 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import {
+  getEventbyId,
+  applicationstoMyEvents,
+  MyApplication,
+} from "./server/data/events.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// fake data
-const UpcomingEvent = [
-  {
-    title: "Upcoming Event",
-    date: "2023-01-01",
-    description: "This is an upcoming event",
-    planner: "Event Planner",
-  },
-];
-const myEvent = [
-  {
-    title: "My Event",
-    date: "2022-01-01",
-    description: "This is my event",
-    planner: "Event Planner",
-  },
-];
-const application = [
-  {
-    username: "Jone",
-    event_id: "1",
-    status: "Pending",
-  },
-];
-const myapplication = [
-  {
-    username: "Alice",
-    event_id: "1",
-    status: "Pending",
-  },
-];
 
 // retrieves the current module's filename and directory name to facilitate file path operations
 const __filename = fileURLToPath(import.meta.url);
@@ -59,10 +32,14 @@ app.get("/events", async (req, res) => {
 });
 
 app.get("/myevent", async (req, res) => {
+  const UpcomingEvent = await getEventbyId(1);
+  const myEvent = await getEventbyId(1);
   res.render("myevent", { UpcomingEvent, myEvent });
 });
 
 app.get("/notification", async (req, res) => {
+  const application = await applicationstoMyEvents(1);
+  const myapplication = {};
   res.render("notification", { application, myapplication });
 });
 

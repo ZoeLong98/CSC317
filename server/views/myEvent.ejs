@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav></nav>
+      <mainContent>
+        <div class="twoList">
+          <section>
+            <h2>Upcoming Events</h2>
+            <% for (let i = 0; i < UpcomingEvent.length; i++) { %>
+            <div class="eventCard">
+              <h3><%= UpcomingEvent[i].title %></h3>
+              <p><%= UpcomingEvent[i].description %></p>
+              <div class="event-details">
+                <span class="event-time"
+                  >Time: <%= new
+                  Date(myEvent[i].event_date).toLocaleString('en-US', {
+                  timeZone: 'America/Los_Angeles' }) %></span
+                >
+                <span class="event-planner"
+                  >Planner: <%= UpcomingEvent[i].created_by %></span
+                >
+              </div>
+            </div>
+            <% } %>
+          </section>
+          <section>
+            <h2>
+              My Events
+              <a href="/addevent" class="add-event-btn">+</a>
+            </h2>
+            <% for (let i = 0; i < myEvent.length; i++) { %>
+            <div class="eventCard">
+              <h3><%= myEvent[i].title %></h3>
+              <p><%= myEvent[i].description %></p>
+              <div class="event-details">
+                <span class="event-time"
+                  >Time: <%= new
+                  Date(myEvent[i].event_date).toLocaleString('en-US', {
+                  timeZone: 'America/Los_Angeles' }) %></span
+                >
+                <span class="event-planner"
+                  >Planner: <%= myEvent[i].created_by %></span
+                >
+              </div>
+            </div>
+            <% } %>
+          </section>
+        </div>
+      </mainContent>
+      <footer></footer>
+    </div>
+  </body>
+  <script type="module" src="scripts/frame.js"></script>
+</html>

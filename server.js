@@ -1,6 +1,11 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import {
+  getEventbyId,
+  applicationstoMyEvents,
+  MyApplication,
+} from "./server/data/events.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,11 +20,27 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "server/public", "index.html"));
 });
 
+app.get("/addevent", (req, res) => {
+  res.sendFile(path.join(__dirname, "server/public", "addevent.html"));
+});
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "server/views"));
 
 app.get("/events", async (req, res) => {
   res.render("events");
+});
+
+app.get("/myevent", async (req, res) => {
+  const UpcomingEvent = await getEventbyId(1);
+  const myEvent = await getEventbyId(1);
+  res.render("myevent", { UpcomingEvent, myEvent });
+});
+
+app.get("/notification", async (req, res) => {
+  const application = await applicationstoMyEvents(1);
+  const myapplication = {};
+  res.render("notification", { application, myapplication });
 });
 
 app.listen(PORT, () => {

@@ -1,0 +1,114 @@
+.event-container {
+  border-radius: 0;
+  display: flex;
+  max-width: 634px;
+  flex-direction: column;
+  align-items: start;
+}
+
+.event-title {
+  color: rgba(0, 0, 0, 1);
+  font: 700 36px Montserrat, sans-serif;
+}
+
+.event-label {
+  color: rgba(0, 0, 0, 1);
+  font-size: 20px;
+  line-height: 2;
+  text-align: center;
+  align-self: start;
+  margin-top: 38px;
+}
+
+.event-input {
+  border-radius: 10.43px;
+  border: 1.304px solid var(--Gray-Dark, #273246);
+  background: var(--Neutral-White, #fff);
+  font-size: 16px;
+  color: rgba(162, 149, 149, 1);
+  padding: 10px 15px;
+}
+
+.date-picker {
+  aspect-ratio: 6.29;
+  object-fit: contain;
+  object-position: center;
+  width: 239px;
+  margin-top: 19px;
+  max-width: 100%;
+}
+
+.description-label {
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+  margin-top: 29px;
+  font: 400 20px/2 Inter, sans-serif;
+}
+
+.description-textarea {
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0);
+  align-self: stretch;
+  margin-top: 31px;
+  color: rgba(162, 149, 149, 1);
+  text-align: center;
+  padding: 9px 15px 86px;
+  font: 400 20px/2 Inter, sans-serif;
+  border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.button-group {
+  display: flex;
+  margin-top: 47px;
+  width: 305px;
+  max-width: 100%;
+  gap: 20px;
+  text-align: center;
+  justify-content: space-between;
+  font: 400 20px/2 Inter, sans-serif;
+}
+
+.clear-button {
+  color: rgba(0, 0, 0, 1);
+  border-radius: 8px;
+  background-color: rgba(217, 217, 217, 1);
+  padding: 5px 10px;
+  border: none;
+  text-align: center;
+  font-size: 1em;
+}
+
+.submit-button {
+  color: rgba(255, 245, 245, 1);
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 1);
+  font-size: 1em;
+  border: none;
+  text-align: center;
+  padding: 5px 10px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 991px) {
+  .date-picker {
+    margin-left: 4px;
+  }
+
+  .description-textarea {
+    max-width: 100%;
+    padding: 0 20px 110px 0;
+  }
+
+  .button-group {
+    margin-top: 40px;
+  }
+}

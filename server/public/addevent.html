@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/addevent.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav></nav>
+      <mainContent>
+        <form class="event-container">
+          <h1 class="event-title">Create Event</h1>
+          <div class="form-column">
+            <label for="eventName" class="event-label">Name</label>
+            <input
+              type="text"
+              id="eventName"
+              class="event-input"
+              placeholder="Event name"
+              aria-label="Event name"
+            />
+          </div>
+
+          <div class="form-column">
+            <div class="date-wrapper">
+              <label for="startDate" class="event-label">Start</label>
+              <input
+                type="datetime-local"
+                id="startDate"
+                class="date-picker"
+                name="startDate"
+              />
+              <label for="endDate" class="event-label">End</label>
+              <input
+                type="datetime-local"
+                id="endDate"
+                class="date-picker"
+                name="endDate"
+              />
+            </div>
+          </div>
+
+          <label for="description" class="description-label"
+            >Descriptions</label
+          >
+          <textarea
+            id="description"
+            class="description-textarea"
+            placeholder="Write something..."
+            aria-label="Event description"
+          ></textarea>
+
+          <div class="button-group">
+            <button type="reset" class="clear-button">Clear</button>
+            <button type="submit" class="submit-button">Create Event</button>
+          </div>
+        </form>
+      </mainContent>
+
+      <footer></footer>
+    </div>
+  </body>
+  <script type="module" src="scripts/frame.js"></script>
+</html>

@@ -151,27 +151,62 @@ body {
   width: 100%;
 }
 
-.eventCard {
-  width: 90%;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 8px 15px;
-  position: relative;
+.events-page main {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.event-details {
+.events-page .event-list {
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.events-page .event-card {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  font-size: 0.9em;
+  align-items: center;
+  background: #fff;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.events-page .event-card img {
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+}
+
+.events-page .event-info {
+  padding: 15px;
+}
+
+.events-page .event-info h3 {
+  margin: 0 0 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.events-page .event-info p {
+  margin: 0 0 10px;
   color: #555;
 }
 
-.event-time,
-.event-planner {
-  display: block;
+.events-page .event-info button {
+  background: #293a4a;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
+.events-page .event-info button:hover {
+  background: #1f2f3e;
+}
+
 
 .button-group {
   display: flex;

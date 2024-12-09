@@ -63,4 +63,12 @@ app.post("/register", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+import { pool } from './server/config/database.js';
 
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Database connection error:', err);
+  } else {
+    console.log('Database connected successfully:', res.rows[0]);
+  }
+});

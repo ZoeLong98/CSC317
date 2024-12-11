@@ -10,13 +10,14 @@
     <div class="container">
       <nav></nav>
       <mainContent>
-        <form class="event-container">
+        <form class="event-container" id="event-form">
           <h1 class="event-title">Create Event</h1>
           <div class="form-column">
             <label for="eventName" class="event-label">Name</label>
             <input
               type="text"
               id="eventName"
+              name="eventName"
               class="event-input"
               placeholder="Event name"
               aria-label="Event name"
@@ -50,8 +51,9 @@
             class="description-textarea"
             placeholder="Write something..."
             aria-label="Event description"
+            name="description"
           ></textarea>
-
+        </div>
           <div class="button-group">
             <button type="reset" class="clear-button">Clear</button>
             <button type="submit" class="submit-button">Create Event</button>
@@ -63,4 +65,5 @@
     </div>
   </body>
   <script type="module" src="scripts/frame.js"></script>
+  <script type="module" src="scripts/addEvent.js"></script>
 </html>

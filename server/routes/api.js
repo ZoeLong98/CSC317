@@ -1,14 +1,14 @@
 import express from "express";
 import {
-  getEventbyId,
-  applicationstoMyEvents,
-  MyApplication,
   deleteEvent,
+  declineApplication,
+  acceptApplication,
 } from "../data/events.js";
 
 const router = express.Router();
 
 // Add routes here
+
 router.delete("/events/:id", (req, res) => {
   const id = parseInt(req.params.id);
   try {

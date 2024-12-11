@@ -17,8 +17,32 @@
               <h3><%= application[i].username %> want to attend</h3>
               <p>Event id: <%= application[i].event_id %></p>
               <div class="button-group">
-                <button class="decline-btn">Decline</button>
-                <button class="accept-btn">Accept</button>
+                <form action="/decline" method="POST" style="display: inline">
+                  <input
+                    type="hidden"
+                    name="event_id"
+                    value="<%= application[i].event_id %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="username"
+                    value="<%= application[i].username %>"
+                  />
+                  <button type="submit" class="decline-btn">Decline</button>
+                </form>
+                <form action="/accept" method="POST" style="display: inline">
+                  <input
+                    type="hidden"
+                    name="event_id"
+                    value="<%= application[i].event_id %>"
+                  />
+                  <input
+                    type="hidden"
+                    name="username"
+                    value="<%= application[i].username %>"
+                  />
+                  <button type="submit" class="accept-btn">Accept</button>
+                </form>
               </div>
             </div>
             <% } %>

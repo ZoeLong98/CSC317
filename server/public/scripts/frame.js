@@ -33,7 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const nav = document.querySelector("nav");
   const footer = document.querySelector("footer");
   const mainContent = document.querySelector("mainContent");
-  nav.innerHTML = createNav();
-  mainContent.classList.add("content-wrapper");
-  footer.innerHTML = createFooter();
+  if (nav) {
+    nav.innerHTML = createNav();
+  }
+
+  if (mainContent) {
+    mainContent.classList.add("content-wrapper");
+  }
+  if (footer) {
+    footer.innerHTML = createFooter();
+  }
 });

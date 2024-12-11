@@ -1,75 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/style.css">
-  <title>Events Page</title>
-</head>
-<body class="events-page <%= isEventsPage ? 'events-underline' : '' %>">
-  <div class="container">
-    <header>
-      <div class="logo">E</div>
-      <nav class="nav-container">
-        <ul class="nav-links">
-          <li><a href="/" class="<%= activePage === 'home' ? 'nav-active' : '' %>">Home</a></li>
-          <li><a href="/events" class="<%= activePage === 'events' ? 'nav-active' : '' %>">Events</a></li>
-          <li><a href="/myEvent" class="<%= activePage === 'myEvent' ? 'nav-active' : '' %>">My Event</a></li>
-          <li><a href="/notification" class="<%= activePage === 'notification' ? 'nav-active' : '' %>">Notification</a></li>
-        </ul>
-      </nav>
-      
-    </header>
-    <main>
-      <div class="event-list">
-        <% events.forEach(event => { %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+    <title>Events Page</title>
+  </head>
+  <body class="events-page <%= isEventsPage ? 'events-underline' : '' %>">
+    <div class="container">
+      <header>
+        <div class="logo">E</div>
+        <nav class="nav-container">
+          <ul class="nav-links">
+            <li>
+              <a
+                href="/"
+                class="<%= activePage === 'home' ? 'nav-active' : '' %>"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/events"
+                class="<%= activePage === 'events' ? 'nav-active' : '' %>"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a
+                href="/myEvent"
+                class="<%= activePage === 'myEvent' ? 'nav-active' : '' %>"
+                >My Event</a
+              >
+            </li>
+            <li>
+              <a
+                href="/notification"
+                class="<%= activePage === 'notification' ? 'nav-active' : '' %>"
+                >Notification</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <div class="event-list">
+          <% events.forEach(event => { %>
           <div class="event-card">
-            <img src="<%= event.image %>" alt="<%= event.title %> Image">
+            <% if (event.image && event.image.trim() !== '') { %>
+            <img src="<%= event.image %>" alt="<%= event.title %> Image" />
+            <% } %>
             <div class="event-info">
               <h3><%= event.title %></h3>
-              <p><%= event.time %></p>
+              <p><%= event.event_date %></p>
               <form action="/register" method="POST">
-                <input type="hidden" name="eventId" value="<%= event.id %>">
+                <input type="hidden" name="eventId" value="<%= event.id %>" />
                 <button type="submit">Register</button>
               </form>
             </div>
           </div>
-        <% }); %>
-      </div>
-    </main>
-    
-  </div>
- 
-  <script type="module">
-    
-    document.querySelectorAll('form').forEach(form => {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault(); 
+          <% }); %>
+        </div>
+      </main>
+    </div>
+    <script type="module">
+      document.querySelectorAll("form").forEach((form) => {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-        const formData = new FormData(form);
-        const eventId = formData.get('eventId'); 
+          const formData = new FormData(form);
+          const eventId = formData.get("eventId");
 
-        try {
-          const response = await fetch('/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ eventId }),
-          });
+          try {
+            const response = await fetch("/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ eventId }),
+            });
 
-          if (response.ok) {
-            const result = await response.text();
-            alert(result); 
-          } else {
-            alert('Failed to register for the event.');
+            if (!response.ok) {
+              alert("Failed to register for the event.");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while registering.");
           }
-        } catch (error) {
-          console.error('Error:', error);
-          alert('An error occurred while registering.');
-        }
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

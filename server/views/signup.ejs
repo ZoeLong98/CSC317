@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="login_signup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 導航欄 -->
+      <nav>
+        <div class="logo" role="img" aria-label="Company Logo">E</div>
+        <div class="nav-container">
+          <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/events" class="nav-link">Events</a>
+            <a href="/myevent" class="nav-link">My Event</a>
+            <a href="/notification" class="nav-link">Notification</a>
+          </div>
+        </div>
+        <hr class="divider" />
+      </nav>
+
+      <!-- 註冊表單 -->
+      <main class="signup-page">
+        <div class="auth-wrapper">
+          <h2>Create an account</h2>
+          <p>Connect with your friends today!</p>
+          <form action="/signup" method="POST">
+            <!-- 用戶名 -->
+            <div class="form-group">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter Your Username"
+                required
+              />
+            </div>
+            <!-- 電子郵件 -->
+            <div class="form-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter Your Email"
+                required
+              />
+            </div>
+            <!-- 手機號碼 -->
+            <div class="form-group">
+              <input
+                type="tel"
+                id="phone_number"
+                name="phone_number"
+                placeholder="Enter Your Phone Number"
+                required
+              />
+            </div>
+            <!-- 密碼 -->
+            <div class="form-group">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter Your Password"
+                required
+              />
+            </div>
+            <!-- 註冊按鈕 -->
+            <button type="submit" class="btn-signup">Sign Up</button>
+          </form>
+          <p>
+            Already have an account?
+            <a href="/login" class="login-link">Login</a>
+          </p>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

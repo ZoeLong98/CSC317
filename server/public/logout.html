@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav></nav>
+      <mainContent>
+        <div class="logout">
+          <h1>You are all set!</h1>
+          <div>
+            <button id="logout-btn" class="decline-btn">Logout</button>
+          </div>
+        </div>
+      </mainContent>
+
+      <footer></footer>
+    </div>
+  </body>
+  <script type="module" src="./scripts/frame.js"></script>
+  <script>
+    document
+      .getElementById("logout-btn")
+      .addEventListener("click", async () => {
+        const response = await fetch("/logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          alert("Logout failed. Please try again.");
+        } else {
+          window.location.href = "/";
+        }
+      });
+  </script>
+</html>

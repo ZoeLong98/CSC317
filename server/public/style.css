@@ -7,9 +7,11 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
 .container {
   width: 80%;
 }
+
 .nav-container {
   display: flex;
   width: 100%;
@@ -34,11 +36,11 @@ body {
   font-size: 1.5em;
 }
 .nav-links {
-  list-style: none !important; 
+  list-style: none !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px; 
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
@@ -98,18 +100,21 @@ body {
   border-radius: 10px;
   border: none;
   background-color: #000;
-  min-height: 50px;
   gap: 10px;
   color: #fff;
-  width: 60%;
+  font-size: 24px;
+  padding: 10px 20px;
   text-align: center;
+  width: 40%;
 }
 .signup-btn {
   border: none;
   border-radius: 10px;
   background-color: #0e64d2;
   color: rgba(255, 255, 255, 0.9);
-  width: 40%;
+  font-size: 24px;
+  padding: 10px 20px;
+  width: 60%;
   text-align: center;
 }
 .right-column {
@@ -159,6 +164,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 8px 15px;
   position: relative;
+  margin-bottom: 20px;
 }
 .event-time,
 .event-planner {
@@ -228,11 +234,8 @@ body {
   background: #1f2f3e;
 }
 .events-underline .nav-container {
-  border-bottom: 2px solid #000; 
+  border-bottom: 2px solid #000;
 }
-
-
-
 
 .button-group {
   display: flex;
@@ -284,4 +287,9 @@ h2 {
   height: 30px;
   text-align: center;
   line-height: 30px;
+}
+
+.logout {
+  display: flex;
+  flex-direction: column;
 }

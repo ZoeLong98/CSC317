@@ -35,8 +35,19 @@
               <a href="/addevent" class="add-event-btn">+</a>
             </h2>
             <% for (let i = 0; i < myEvent.length; i++) { %>
-            <div class="eventCard">
-              <h3><%= myEvent[i].title %></h3>
+            <div class="eventCard" id="delete-<%= myEvent[i].id  %>">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <h3 style="margin-bottom: 5px"><%= myEvent[i].title %></h3>
+                <button id="delete-<%= myEvent[i].id  %>" class="delete">
+                  X
+                </button>
+              </div>
               <p><%= myEvent[i].description %></p>
               <div class="event-details">
                 <span class="event-time"
@@ -57,4 +68,5 @@
     </div>
   </body>
   <script type="module" src="scripts/frame.js"></script>
+  <script type="module" src="scripts/myEvents.js"></script>
 </html>

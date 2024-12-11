@@ -1,7 +1,14 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import { getAllEvents, getEventbyId, applicationstoMyEvents, MyApplication } from "./server/data/events.js";
+import {
+  getEventbyId,
+  applicationstoMyEvents,
+  MyApplication,
+  deleteEvent
+} from "./server/data/events.js";
+import { backendRouter } from "./server/routes/api.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,16 +43,21 @@ app.get("/events", (req, res) => {
 
 
 app.get("/myevent", async (req, res) => {
-  const UpcomingEvent = await getEventbyId(1);
-  const myEvent = await getEventbyId(1);
+  const UpcomingEvent = await getEventbyId("defaultuser1");
+  const myEvent = await getEventbyId("defaultuser1");
   res.render("myevent", { UpcomingEvent, myEvent });
 });
 
 app.get("/notification", async (req, res) => {
-  const application = await applicationstoMyEvents(1);
+  const application = await applicationstoMyEvents("defaultuser1");
   const myapplication = {};
   res.render("notification", { application, myapplication });
 });
+
+
+// mount the router with /api prefix
+app.use(express.json());
+app.use("/api", backendRouter);
 
 
 app.post("/register", (req, res) => {
@@ -58,6 +70,7 @@ app.post("/register", (req, res) => {
   console.log(`User registered for event with ID: ${eventId}`);
   res.status(200).send(`Successfully registered for event with ID: ${eventId}`);
 });
+
 
 
 app.listen(PORT, () => {

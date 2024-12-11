@@ -44,4 +44,17 @@ const MyApplication = async (id) => {
     console.error(error.message);
   }
 };
-export { getEventbyId, applicationstoMyEvents, MyApplication, };
+
+
+const deleteEvent = async (id) => {
+  try {
+    //delete the event
+    const results = await pool.query("DELETE FROM events WHERE id = $1", [id]);
+    return results.rows;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+export { getEventbyId, applicationstoMyEvents, MyApplication, deleteEvent };
+

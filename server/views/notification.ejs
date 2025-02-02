@@ -11,13 +11,18 @@
       <mainContent>
         <div class="twoList">
           <section>
-            <h2>Received Event Application</h2>
+            <h2>Received Event Registration</h2>
             <% for (let i = 0; i < application.length; i++) { %>
             <div class="eventCard">
               <h3><%= application[i].username %> want to attend</h3>
               <p>Event id: <%= application[i].event_id %></p>
               <div class="button-group">
-                <form action="/decline" method="POST" style="display: inline">
+                <form
+                  action="/decline"
+                  method="POST"
+                  id="decline-form"
+                  style="display: inline"
+                >
                   <input
                     type="hidden"
                     name="event_id"
@@ -48,7 +53,7 @@
             <% } %>
           </section>
           <section>
-            <h2>My Application</h2>
+            <h2>My Registration</h2>
             <% for (let i = 0; i < myapplication.length; i++) { %>
             <div class="eventCard">
               <p>Event id: <%= myapplication[i].event_id %></p>

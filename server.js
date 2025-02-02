@@ -242,6 +242,7 @@ app.post("/decline", async (req, res) => {
   try {
     await declineApplication(username, event_id);
     console.log(`Declined: ${username} for event ${event_id}`);
+    res.redirect("/notification");
   } catch (error) {
     console.error("Error declining application:", error);
     res.status(500).send("An error occurred while declining the application.");
@@ -253,17 +254,11 @@ app.post("/accept", async (req, res) => {
   try {
     await acceptApplication(username, event_id);
     console.log(`Accepted: ${username} for event ${event_id}`);
+    res.redirect("/notification");
   } catch (error) {
     console.error("Error accepting application:", error);
     res.status(500).send("An error occurred while accepting the application.");
   }
-});
-
-app.post("/accept", (req, res) => {
-  const { event_id, username } = req.body;
-  // 处理接受逻辑
-  console.log(`Accepted: ${username} for event ${event_id}`);
-  res.send("Application accepted");
 });
 
 app.listen(PORT, () => {

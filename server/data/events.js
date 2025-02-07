@@ -1,10 +1,10 @@
 import { pool } from "../config/database.js";
 
-const getEventbyId = async (id) => {
+const getEventbyId = async (name) => {
   try {
     const results = await pool.query(
       "SELECT * FROM events where created_by = $1",
-      [id]
+      [name]
     );
     return results.rows;
   } catch (error) {

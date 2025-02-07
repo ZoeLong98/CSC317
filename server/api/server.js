@@ -88,7 +88,7 @@ app.get("/events", async (req, res) => {
 app.get("/myEvent", checkAuth, async (req, res) => {
   try {
     const UpcomingEvent = await myUpcomingEvent(req.user.username);
-    const myEvent = await getEventbyId(req.user.id);
+    const myEvent = await getEventbyId(req.user.username);
     res.render("myEvent", { UpcomingEvent, myEvent });
   } catch (error) {
     console.error("Error fetching my events:", error.message);
@@ -222,7 +222,7 @@ app.post("/logout", (req, res) => {
 app.post("/add-event", checkAuth, async (req, res) => {
   const { title, description, startDate, endDate } = req.body;
   console.log("Event data:", req.body);
-  const createdBy = req.user.username; // Get the username from the token
+  const createdBy = req.user.username; // Get the userid from the token
   console.log("Created by:", createdBy);
   try {
     if (!createdBy || !title || !description || !startDate || !endDate) {

@@ -85,11 +85,11 @@ app.get("/events", async (req, res) => {
   }
 });
 
-app.get("/myevent", checkAuth, async (req, res) => {
+app.get("/myEvent", checkAuth, async (req, res) => {
   try {
     const UpcomingEvent = await myUpcomingEvent(req.user.username);
     const myEvent = await getEventbyId(req.user.id);
-    res.render("myevent", { UpcomingEvent, myEvent });
+    res.render("myEvent", { UpcomingEvent, myEvent });
   } catch (error) {
     console.error("Error fetching my events:", error.message);
     res.status(500).send("An error occurred while fetching my events.");

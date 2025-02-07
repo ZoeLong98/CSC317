@@ -71,22 +71,26 @@
           const formData = new FormData(form);
           const eventId = formData.get("eventId");
 
-          try {
-            const response = await fetch("/register", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ eventId }),
-            });
+          // try {
+          const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ eventId }),
+          });
 
-            if (!response.ok) {
-              alert("Failed to register for the event.");
+          if (!response.ok) {
+            if (response.status === 401) {
+              alert("You need to be logged in to register for an event.");
+            } else if (response.status === 500) {
+              alert("Don't register for the same event twice.");
             }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred while registering.");
           }
+          // } catch (error) {
+          //   console.error("Error:", error);
+          //   alert("Error:", error);
+          // }
         });
       });
     </script>

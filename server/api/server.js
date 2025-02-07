@@ -1,8 +1,8 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import session from "express-session";
-import pgSession from "connect-pg-simple";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 import { pool } from "../config/database.js"; // Assuming you have a database.js file for your database connection
 import {
   getAllEvents,
@@ -17,52 +17,62 @@ import { backendRouter } from "../routes/api.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || "a-secret-key";
 
+app.use(cookieParser());
 app.use(
-  session({
-    store: new (pgSession(session))({
-      pool: pool, // 使用现有的 PostgreSQL 连接池
-      createTableIfMissing: true, // 自动创建 session 表
-    }),
-    secret: process.env.SESSION_SECRET || "a-secret-key",
-    resave: false, // 避免不必要的 session 保存操作
-    saveUninitialized: false, // 避免存储未修改的 session
-    cookie: {
-      secure: process.env.NODE_ENV === "production", // 仅在生产环境中使用 secure cookie
-      maxAge: 3600000, // 1 小时
-      sameSite: "lax", // 或者 "strict" 或 "none" 取决于你的需求
-    },
-  })
+  express.static(
+    path.join(path.dirname(fileURLToPath(import.meta.url)), "../public")
+  )
 );
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "../views"));
+app.set(
+  "views",
+  path.join(path.dirname(fileURLToPath(import.meta.url)), "../views")
+);
 
 // Middleware to check if user is logged in
 function checkAuth(req, res, next) {
-  if (req.session && req.session.username) {
-    next();
+  const token = req.cookies.token;
+  if (token) {
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.redirect("/login");
+      }
+      req.user = decoded;
+      console.log("User authenticated:", decoded);
+      next();
+    });
   } else {
     res.redirect("/login");
   }
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public", "index.html"));
+  res.sendFile(
+    path.join(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "../public",
+      "index.html"
+    )
+  );
 });
 
 app.get("/addevent", checkAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, "../public", "addevent.html"), {
-    userid: req.session.userid,
-    username: req.session.username,
-  });
+  res.sendFile(
+    path.join(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "../public",
+      "addevent.html"
+    ),
+    {
+      userId: req.user.id,
+      username: req.user.username,
+    }
+  );
 });
 
 app.get("/events", async (req, res) => {
@@ -77,8 +87,8 @@ app.get("/events", async (req, res) => {
 
 app.get("/myevent", checkAuth, async (req, res) => {
   try {
-    const UpcomingEvent = await myUpcomingEvent(req.session.username);
-    const myEvent = await getEventbyId(req.session.username);
+    const UpcomingEvent = await myUpcomingEvent(req.user.username);
+    const myEvent = await getEventbyId(req.user.id);
     res.render("myevent", { UpcomingEvent, myEvent });
   } catch (error) {
     console.error("Error fetching my events:", error.message);
@@ -88,8 +98,8 @@ app.get("/myevent", checkAuth, async (req, res) => {
 
 app.get("/notification", checkAuth, async (req, res) => {
   try {
-    const application = await applicationstoMyEvents(req.session.username);
-    const myapplication = await MyApplication(req.session.username);
+    const application = await applicationstoMyEvents(req.user.username);
+    const myapplication = await MyApplication(req.user.username);
     res.render("notification", { application, myapplication });
   } catch (error) {
     console.error("Error fetching notifications:", error.message);
@@ -137,8 +147,21 @@ app.post("/signup", async (req, res) => {
 
 // Login Page Route
 app.get("/login", (req, res) => {
-  if (req.session && req.session.username) {
-    res.sendFile(path.join(__dirname, "../public", "logout.html"));
+  const token = req.cookies.token;
+  if (token) {
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+      if (err) {
+        res.render("login", { Message: null });
+      } else {
+        res.sendFile(
+          path.join(
+            path.dirname(fileURLToPath(import.meta.url)),
+            "../public",
+            "logout.html"
+          )
+        );
+      }
+    });
   } else {
     res.render("login", { Message: null });
   }
@@ -165,12 +188,17 @@ app.post("/login", async (req, res) => {
     if (result.rows.length > 0) {
       const user = result.rows[0]; // Extract user from result
       console.log("User logged in:", user);
-      // Store user ID and username in session
-      req.session.userid = user.id;
-      req.session.username = user.username;
-      if (req.session.username) {
-        res.redirect("/events");
-      }
+      // Generate JWT
+      const token = jwt.sign(
+        { id: user.id, username: user.username },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      });
+      res.redirect("/events");
     } else {
       res.render("login", {
         Message: "Invalid email or password. Please try again.",
@@ -186,20 +214,15 @@ app.post("/login", async (req, res) => {
 
 // Logout Route
 app.post("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send("Logout failed.");
-    }
-    res.clearCookie("connect.sid");
-    res.redirect("/"); // Redirect to login page after successful logout
-  });
+  res.clearCookie("token");
+  res.redirect("/"); // Redirect to login page after successful logout
 });
 
 // Route to handle adding an event
 app.post("/add-event", checkAuth, async (req, res) => {
   const { title, description, startDate, endDate } = req.body;
   console.log("Event data:", req.body);
-  const createdBy = req.session.username; // Get the username from the session
+  const createdBy = req.user.username; // Get the username from the token
   console.log("Created by:", createdBy);
   try {
     if (!createdBy || !title || !description || !startDate || !endDate) {
@@ -222,13 +245,13 @@ app.post("/add-event", checkAuth, async (req, res) => {
 // mount the router with /api prefix
 app.use("/api", backendRouter);
 
-app.post("/register", async (req, res) => {
+app.post("/register", checkAuth, async (req, res) => {
   const { eventId } = req.body;
   console.log("Event ID:", eventId);
-  if (!req.session || !req.session.username) {
+  if (!req.user || !req.user.username) {
     return res.status(401).send("You must be logged in to apply to an event.");
   }
-  const username = req.session.username;
+  const username = req.user.username;
   if (!eventId) {
     return res.status(400).send("Event ID is required.");
   }
